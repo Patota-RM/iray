@@ -198,9 +198,9 @@ export default function Feed() {
       </form>
 
       <div className="flex gap-1 mb-2 overflow-x-auto justify-center sticky top-14 z-10 bg-white py-1">
-        <button onClick={() => setFilter('TOUS')} className={`px-1.5 py-0.5 rounded-full text-xs ${filter === 'TOUS' ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>Tous</button>
+        <button onClick={() => setFilter('TOUS')} className={`px-1 py-0.5 rounded-full text-[10px] text-center ${filter === 'TOUS' ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>Tous</button>
         {POST_TYPES.map(t => (
-          <button key={t.id} onClick={() => setFilter(t.id)} className={`px-1.5 py-0.5 rounded-full text-xs ${filter === t.id ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>{t.label}</button>
+          <button key={t.id} onClick={() => setFilter(t.id)} className={`px-1 py-0.5 rounded-full text-[10px] text-center ${filter === t.id ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>{t.label}</button>
         ))}
       </div>
       
