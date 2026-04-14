@@ -2,7 +2,7 @@
 
 Plateforme collaborative pour tous les Malgaches: développeurs, cultivateurs, artisans, entrepreneurs, ingénieurs, entreprises et particuliers.
 
-## Couleurs du drapeau malgache
+## Design simple avec les couleurs du drapeau malgache
 
 - Vert: `#007A3E`
 - Blanc: `#FFFFFF`  
