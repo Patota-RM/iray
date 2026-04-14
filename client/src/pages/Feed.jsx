@@ -56,7 +56,7 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
   const typeColors = { OPPORTUNITY: 'bg-green-100 text-green-700', JOB: 'bg-blue-100 text-blue-700', SERVICE: 'bg-purple-100 text-purple-700', FORMATION: 'bg-pink-100 text-pink-700', PRODUCT: 'bg-orange-100 text-orange-700', NEWS: 'bg-cyan-100 text-cyan-700' }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-2 hover:shadow-md transition-all">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-1 hover:shadow-md transition-all">
       <div className="flex gap-3">
         <Link to={`/profile/${author?.id}`}>
           <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-green-600 to-green-700 flex items-center justify-center flex-shrink-0">
@@ -65,7 +65,7 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
         </Link>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <Link to={`/profile/${author?.id}`} className="font-semibold text-gray-900">{author?.name}</Link>
               <span className="text-xs text-gray-500">{getTimeAgo(post.createdAt)}</span>
             </div>
@@ -82,10 +82,10 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
 
       {editing ? (
         <div className="mt-3 space-y-2">
-          <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full p-2 border rounded-lg text-sm" rows={3} />
-          <div className="flex gap-2">
-            <button onClick={handleSaveEdit} className="px-3 py-1 bg-green-600 text-white rounded-lg text-sm">Enregistrer</button>
-            <button onClick={() => setEditing(false)} className="px-3 py-1 bg-gray-100 rounded-lg text-sm">Annuler</button>
+          <textarea value={editContent} onChange={e => setEditContent(e.target.value)} className="w-full p-1 border rounded-lg text-xs" rows={2} />
+          <div className="flex gap-1">
+            <button onClick={handleSaveEdit} className="px-2 py-0.5 bg-green-600 text-white rounded-lg text-xs">Enregistrer</button>
+            <button onClick={() => setEditing(false)} className="px-2 py-0.5 bg-gray-100 rounded-lg text-xs">Annuler</button>
           </div>
         </div>
       ) : (
@@ -94,12 +94,12 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
 
       {post.media && <MediaPreview media={post.media} />}
 
-      <div className="flex items-center gap-2 mt-3">
+      <div className="flex items-center gap-1 mt-3">
         <span className={`px-2 py-0.5 rounded-full text-xs ${typeColors[post.type] || 'bg-gray-100'}`}>{POST_TYPES.find(t => t.id === post.type)?.label}</span>
         <span className="text-xs text-gray-500">{post.likes?.length || 0} - {comments.length}</span>
       </div>
 
-      <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+      <div className="flex gap-1 mt-3 pt-3 border-t border-gray-100">
         <button onClick={() => onLike(post.id)} className={`flex items-center gap-1 text-xs ${isLiked ? 'text-red-500' : 'text-gray-500'}`}>
           <Heart className={`w-3 h-3 ${isLiked ? 'fill-current' : ''}`} />Like
         </button>
@@ -115,11 +115,11 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
         <div className="mt-3 pt-3 border-t border-gray-100 space-y-2">
           {comments.map(c => {
             const cAuthor = users.find(u => u.id === c.authorId)
-            return <div key={c.id} className="text-sm"><span className="font-medium">{cAuthor?.name}: </span><span className="text-gray-600">{c.content}</span></div>
+            return <div key={c.id} className="text-xs"><span className="font-medium">{cAuthor?.name}: </span><span className="text-gray-600">{c.content}</span></div>
           })}
-          <form onSubmit={handleComment} className="flex gap-2 mt-2">
-            <input type="text" value={newComment} onChange={e => setNewComment(e.target.value)} placeholder="Comment..." className="flex-1 px-3 py-2 bg-gray-50 rounded-lg text-sm" />
-            <button type="submit" disabled={!newComment.trim()} className="p-2 bg-green-600 text-white rounded-lg"><Send className="w-4 h-4" /></button>
+          <form onSubmit={handleComment} className="flex gap-1 mt-2">
+            <input type="text" value={newComment} onChange={e => setNewComment(e.target.value)} placeholder="Comment..." className="flex-1 px-2 py-1 bg-gray-50 rounded-lg text-xs" />
+            <button type="submit" disabled={!newComment.trim()} className="p-1 bg-green-600 text-white rounded-lg"><Send className="w-3 h-3" /></button>
           </form>
         </div>
       )}
@@ -144,13 +144,13 @@ function MediaUploader({ media, onChange }) {
       <div className="mt-3 relative rounded-xl overflow-hidden bg-gray-900">
         {media.type === 'image' && <img src={media.url} alt="Preview" className="w-full max-h-40 object-cover" />}
         {media.type === 'video' && <video src={media.url} className="w-full max-h-40" />}
-        <button onClick={() => onChange(null)} className="absolute top-2 right-2 p-1 bg-black/50 text-white rounded-full"><X className="w-4 h-4" /></button>
+        <button onClick={() => onChange(null)} className="absolute top-1 right-2 p-1 bg-black/50 text-white rounded-full"><X className="w-4 h-4" /></button>
       </div>
     )
   }
 
   return (
-    <div className="flex gap-2 mt-3 justify-center">
+    <div className="flex gap-1 mt-3 justify-center">
       <input type="file" ref={imageInputRef} onChange={(e) => handleFileChange(e, 'image')} accept="image/*" className="hidden" />
       <input type="file" ref={videoInputRef} onChange={(e) => handleFileChange(e, 'video')} accept="video/*" className="hidden" />
       <button type="button" onClick={() => imageInputRef.current?.click()} className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-lg text-xs hover:bg-gray-200">
@@ -184,7 +184,7 @@ export default function Feed() {
 
   return (
     <div className="container-app px-4 py-6">
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-2 mb-4">
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-1 mb-4">
         <textarea value={content} onChange={e => setContent(e.target.value)} placeholder="Quoi de neuf?" className="w-full resize-none focus:outline-none" rows={2} />
         <MediaUploader media={media} onChange={setMedia} />
         <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
@@ -204,7 +204,7 @@ export default function Feed() {
         ))}
       </div>
       
-      <select value={locationFilter} onChange={e => setLocationFilter(e.target.value)} className="w-full mb-4 p-2 border rounded-lg text-sm">
+      <select value={locationFilter} onChange={e => setLocationFilter(e.target.value)} className="w-full mb-4 p-1 border rounded-lg text-xs">
         <option value="">Toutes les villes</option>
         {CITIES.map(city => <option key={city} value={city}>{city}</option>)}
       </select>
