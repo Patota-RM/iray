@@ -99,15 +99,15 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
         <span className="text-xs text-gray-500">{post.likes?.length || 0} - {comments.length}</span>
       </div>
 
-      <div className="flex gap-4 mt-3 pt-3 border-t border-gray-100">
-        <button onClick={() => onLike(post.id)} className={`flex items-center gap-1 text-sm ${isLiked ? 'text-red-500' : 'text-gray-500'}`}>
-          <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />Like
+      <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+        <button onClick={() => onLike(post.id)} className={`flex items-center gap-1 text-xs ${isLiked ? 'text-red-500' : 'text-gray-500'}`}>
+          <Heart className={`w-3 h-3 ${isLiked ? 'fill-current' : ''}`} />Like
         </button>
-        <button onClick={() => setShowComments(!showComments)} className="flex items-center gap-1 text-sm text-gray-500">
-          <MessageCircle className="w-4 h-4" />Comment
+        <button onClick={() => setShowComments(!showComments)} className="flex items-center gap-1 text-xs text-gray-500">
+          <MessageCircle className="w-3 h-3" />Comment
         </button>
-        <button onClick={() => navigator.clipboard.writeText(`https://madahub.mg/post/${post.id}`)} className="flex items-center gap-1 text-sm text-gray-500">
-          <Send className="w-4 h-4" />Share
+        <button onClick={() => navigator.clipboard.writeText(`https://madahub.mg/post/${post.id}`)} className="flex items-center gap-1 text-xs text-gray-500">
+          <Send className="w-3 h-3" />Share
         </button>
       </div>
 
@@ -153,11 +153,11 @@ function MediaUploader({ media, onChange }) {
     <div className="flex gap-2 mt-3 justify-center">
       <input type="file" ref={imageInputRef} onChange={(e) => handleFileChange(e, 'image')} accept="image/*" className="hidden" />
       <input type="file" ref={videoInputRef} onChange={(e) => handleFileChange(e, 'video')} accept="video/*" className="hidden" />
-      <button type="button" onClick={() => imageInputRef.current?.click()} className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200">
-        <Image className="w-4 h-4" />Photo
+      <button type="button" onClick={() => imageInputRef.current?.click()} className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-lg text-xs hover:bg-gray-200">
+        <Image className="w-3 h-3" />Photo
       </button>
-      <button type="button" onClick={() => videoInputRef.current?.click()} className="flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200">
-        <Video className="w-4 h-4" />Video
+      <button type="button" onClick={() => videoInputRef.current?.click()} className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-lg text-xs hover:bg-gray-200">
+        <Video className="w-3 h-3" />Video
       </button>
     </div>
   )
@@ -190,17 +190,17 @@ export default function Feed() {
         <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
           <div className="flex gap-1 overflow-x-auto justify-center flex-1">
             {POST_TYPES.map(t => (
-              <button type="button" key={t.id} onClick={() => setType(t.id)} className={`px-2 py-1 rounded-full text-xs whitespace-nowrap ${type === t.id ? 'bg-green-600 text-white' : 'bg-gray-100'}`}>{t.label}</button>
+              <button type="button" key={t.id} onClick={() => setType(t.id)} className={`px-1.5 py-0.5 rounded-full text-xs whitespace-nowrap ${type === t.id ? 'bg-green-600 text-white' : 'bg-gray-100'}`}>{t.label}</button>
             ))}
           </div>
-          <button type="submit" disabled={!content.trim() && !media} className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium disabled:opacity-50 ml-2">Poster</button>
+          <button type="submit" disabled={!content.trim() && !media} className="px-3 py-1.5 bg-green-600 text-white rounded-lg text-xs font-medium disabled:opacity-50 ml-2">Poster</button>
         </div>
       </form>
 
-      <div className="flex gap-1 mb-2 overflow-x-auto justify-center sticky top-14 z-10 bg-white py-2">
-        <button onClick={() => setFilter('TOUS')} className={`px-2 py-1 rounded-full text-xs ${filter === 'TOUS' ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>Tous</button>
+      <div className="flex gap-1 mb-2 overflow-x-auto justify-center sticky top-14 z-10 bg-white py-1">
+        <button onClick={() => setFilter('TOUS')} className={`px-1.5 py-0.5 rounded-full text-xs ${filter === 'TOUS' ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>Tous</button>
         {POST_TYPES.map(t => (
-          <button key={t.id} onClick={() => setFilter(t.id)} className={`px-2 py-1 rounded-full text-xs ${filter === t.id ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>{t.label}</button>
+          <button key={t.id} onClick={() => setFilter(t.id)} className={`px-1.5 py-0.5 rounded-full text-xs ${filter === t.id ? 'bg-green-600 text-white' : 'bg-white border border-gray-200'}`}>{t.label}</button>
         ))}
       </div>
       
