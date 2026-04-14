@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mg-green: #007A3E;
+  --mg-white: #FFFFFF;
+  --mg-red: #FC3D32;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #18181b;
+}
+
+@layer components {
+  .gradient-mg {
+    background: linear-gradient(135deg, #007A3E 0%, #00A64B 50%, #FC3D32 100%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* PC Background Pattern */
+@media (min-width: 1024px) {
+  body {
+    background: 
+      linear-gradient(135deg, rgba(0,122,62,0.03) 0%, transparent 50%),
+      linear-gradient(225deg, rgba(252,61,50,0.03) 0%, transparent 50%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(0,122,62,0.02) 20px,
+        rgba(0,122,62,0.02) 40px
+      ),
+      #f8fafc;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #007A3E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00582E;
+}
+
+/* Madagascar Flag Colors */
+.bg-mg-green { background-color: #007A3E; }
+.bg-mg-white { background-color: #FFFFFF; }
+.bg-mg-red { background-color: #FC3D32; }
+.text-mg-green { color: #007A3E; }
+.text-mg-red { color: #FC3D32; }
+.border-mg-green { border-color: #007A3E; }
+.border-mg-red { border-color: #FC3D32; }
+
+/* Responsive breakpoints */
+@media (max-width: 640px) {
+  .max-w-xl { max-width: 100%; }
+}
+
+@media (min-width: 768px) {
+  .md-max-w-2xl { max-width: 42rem; }
+}
+
+@media (min-width: 1024px) {
+  .lg-max-w-4xl { max-width: 56rem; }
+}
+
+/* Touch-friendly tap targets for mobile */
+@media (pointer: coarse) {
+  button, a { min-height: 44px; min-width: 44px; }
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: all 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px rgba(0,122,62,0.2);
+}
+
+/* Consistent container width for all sections */
+.container-app {
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* PC: slightly wider */
+@media (min-width: 768px) {
+  .container-app {
+    max-width: 32rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-app {
+    max-width: 36rem;
+  }
+}
+
+/* Animation for fade-in */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
