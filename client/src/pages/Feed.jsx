@@ -164,12 +164,14 @@ function MediaUploader({ media, onChange }) {
 }
 
 export default function Feed() {
-  const { posts, users, user, createPost, likePost, commentPost, deletePost, updatePost } = useContext(AppContext)
+  const { posts, users, user, createPost, likePost, commentPost, deletePost, updatePost } = useContext(AppContext) || {}
   const [content, setContent] = useState('')
   const [type, setType] = useState('OPPORTUNITY')
   const [media, setMedia] = useState(null)
   const [filter, setFilter] = useState('TOUS')
   const [locationFilter, setLocationFilter] = useState('')
+
+  if (!posts || !users) return null
 
   const handleSubmit = (e) => {
     e.preventDefault()

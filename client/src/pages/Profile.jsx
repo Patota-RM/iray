@@ -69,9 +69,9 @@ function getCategoryInfo(id) {
 
 export default function Profile() {
   const { id } = useParams()
-  const { user, users, getUserStats, updateUser } = useContext(AppContext)
-  const profileUser = id ? users.find(u => u.id === id) : user
-  const isOwn = !id || id === user.id
+  const { user, users, getUserStats, updateUser } = useContext(AppContext) || {}
+  const profileUser = id ? users?.find(u => u.id === id) : user
+  const isOwn = !id || (user && id === user.id)
   const stats = getUserStats(profileUser?.id)
   const [editing, setEditing] = useState(false)
   const [sharePopup, setSharePopup] = useState(false)
@@ -90,7 +90,7 @@ export default function Profile() {
     }
   }
 
-  if (!profileUser) return <div className="p-4 text-center">Utilisateur non trouve</div>
+  if (!users || !profileUser) return <div className="p-4 text-center">Chargement...</div>
 
   const cat = getCategoryInfo(profileUser.category)
 

@@ -92,11 +92,14 @@ function CreateJobModal({ onClose, onSubmit }) {
 }
 
 export default function Jobs() {
-  const { jobs, users, user, createJob, applyToJob } = useContext(AppContext)
+  const context = useContext(AppContext) || {}
+  const { jobs = [], users = [], user, createJob, applyToJob } = context
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('TOUS')
   const [locationFilter, setLocationFilter] = useState('')
   const [showModal, setShowModal] = useState(false)
+
+  if (!jobs.length && !users.length) return null
 
   const filteredJobs = jobs.filter(j => {
     const matchSearch = !search || j.title.toLowerCase().includes(search.toLowerCase()) || j.enterprise.toLowerCase().includes(search.toLowerCase())

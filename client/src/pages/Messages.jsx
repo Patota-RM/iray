@@ -40,21 +40,25 @@ export default function Messages() {
   const initialMessage = searchParams.get('msg') ? decodeURIComponent(searchParams.get('msg')) : null
 
   const getConversation = (otherId) => {
+    if (!user) return []
     return messages.filter(m => 
       (m.fromId === user.id && m.toId === otherId) || 
       (m.fromId === otherId && m.toId === user.id)
     ).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   }
 
-  const getUnread = (otherId) => messages.filter(m => m.fromId === otherId && m.toId === user.id && !m.read).length
+  const getUnread = (otherId) => {
+    if (!user) return 0
+    return messages.filter(m => m.fromId === otherId && m.toId === user.id && !m.read).length
+  }
 
-  const otherUsers = users.filter(u => u.id !== user.id).sort((a, b) => {
+  const otherUsers = user ? users.filter(u => u.id !== user.id).sort((a, b) => {
   const convA = getConversation(a.id)
   const convB = getConversation(b.id)
   const dateA = convA[0]?.createdAt || '1970-01-01'
   const dateB = convB[0]?.createdAt || '1970-01-01'
   return new Date(dateB) - new Date(dateA)
-})
+}) : []
   const conversation = otherUser ? getConversation(otherUser.id) : []
 
   useEffect(() => {
