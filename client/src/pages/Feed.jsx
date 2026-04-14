@@ -56,7 +56,7 @@ function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
   const typeColors = { OPPORTUNITY: 'bg-green-100 text-green-700', JOB: 'bg-blue-100 text-blue-700', SERVICE: 'bg-purple-100 text-purple-700', FORMATION: 'bg-pink-100 text-pink-700', PRODUCT: 'bg-orange-100 text-orange-700', NEWS: 'bg-cyan-100 text-cyan-700' }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-all">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-2 hover:shadow-md transition-all">
       <div className="flex gap-3">
         <Link to={`/profile/${author?.id}`}>
           <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-green-600 to-green-700 flex items-center justify-center flex-shrink-0">
@@ -184,7 +184,7 @@ export default function Feed() {
 
   return (
     <div className="container-app px-4 py-6">
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4">
+      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-2 mb-4">
         <textarea value={content} onChange={e => setContent(e.target.value)} placeholder="Quoi de neuf?" className="w-full resize-none focus:outline-none" rows={2} />
         <MediaUploader media={media} onChange={setMedia} />
         <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
