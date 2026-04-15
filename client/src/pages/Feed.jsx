@@ -40,8 +40,8 @@ function MediaPreview({ media }) {
 }
 
 function PostCard({ post, users, onLike, onComment, onDelete, onUpdate }) {
-  const { user } = useContext(AppContext)
-  const author = users.find(u => u.id === post.authorId)
+  const { user } = useContext(AppContext) || {}
+  const author = users?.find(u => u.id === post.authorId)
   const [showComments, setShowComments] = useState(false)
   const [newComment, setNewComment] = useState('')
   const [editing, setEditing] = useState(false)
@@ -164,14 +164,23 @@ function MediaUploader({ media, onChange }) {
 }
 
 export default function Feed() {
-  const { posts, users, user, createPost, likePost, commentPost, deletePost, updatePost } = useContext(AppContext) || {}
+  const context = useContext(AppContext)
+  const posts = context?.posts || []
+  const users = context?.users || []
+  const user = context?.user
+  const createPost = context?.createPost
+  const likePost = context?.likePost
+  const commentPost = context?.commentPost
+  const deletePost = context?.deletePost
+  const updatePost = context?.updatePost
+  
   const [content, setContent] = useState('')
   const [type, setType] = useState('OPPORTUNITY')
   const [media, setMedia] = useState(null)
   const [filter, setFilter] = useState('TOUS')
   const [locationFilter, setLocationFilter] = useState('')
 
-  if (!posts || !users) return null
+  if (!createPost) return <div className="p-4 text-center">Chargement...</div>
 
   const handleSubmit = (e) => {
     e.preventDefault()

@@ -100,7 +100,11 @@ export default function Messages() {
 }
 
 function ChatWindow({ otherUser, conversation, initialMessage }) {
-  const { user, sendMessage } = useContext(AppContext)
+  const context = useContext(AppContext)
+  const user = context?.user
+  const sendMessage = context?.sendMessage
+  
+  if (!sendMessage) return <div className="p-4 text-center">Chargement...</div>
   const [msg, setMsg] = useState(initialMessage || '')
   const [attachment, setAttachment] = useState(null)
   const fileInputRef = useRef(null)
