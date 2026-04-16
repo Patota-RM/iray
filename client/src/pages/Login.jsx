@@ -33,8 +33,8 @@ export default function Login() {
       localStorage.setItem('madahub_sessions', JSON.stringify(sessions))
     }
 
-    // Save current user in THIS TAB ONLY (sessionStorage is per-tab)
-    sessionStorage.setItem('iray_current_user', JSON.stringify(user))
+    // Save current user in localStorage (persists across browser sessions)
+    localStorage.setItem('iray_current_user', JSON.stringify(user))
 
     navigate(`/profile/${user.id}`)
   }

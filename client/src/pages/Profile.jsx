@@ -1,8 +1,22 @@
 import { useContext, useState, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { MapPin, MessageCircle, Edit, Share2, Check, Camera, X, Copy, Users, MessageSquare, ExternalLink } from 'lucide-react'
+import { MapPin, MessageCircle, Edit, Share2, Check, Camera, X, Copy, Users, Heart } from 'lucide-react' // Ajout de Heart pour les likes
 import { AppContext } from '../App'
-import { CATEGORIES, CITIES } from '../data/store'
+import { CATEGORIES, CITIES, POST_TYPES } from '../data/store' // Ajout de POST_TYPES
+
+// ✅ AJOUT 1 : Fonction pour calculer le temps (2h, 3j, etc.)
+function getTimeAgo(dateString) {
+  const date = new Date(dateString)
+  const now = new Date()
+  const diff = now - date
+  const minutes = Math.floor(diff / 60000)
+  const hours = Math.floor(diff / 3600000)
+  const days = Math.floor(diff / 86400000)
+  if (minutes < 1) return 'Maintenant'
+  if (minutes < 60) return `${minutes}m`
+  if (hours < 24) return `${hours}h`
+  return `${days}j`
+}
 
 const SharePopup = ({ onClose }) => {
   const [copied, setCopied] = useState(false)
@@ -69,7 +83,8 @@ function getCategoryInfo(id) {
 
 export default function Profile() {
   const { id } = useParams()
-  const { user, users, getUserStats, updateUser } = useContext(AppContext) || {}
+  // ✅ AJOUT 2 : J'ai extrait "posts" du Context
+  const { user, users, posts, getUserStats, updateUser } = useContext(AppContext) || {}
   const profileUser = id ? users?.find(u => u.id === id) : user
   const isOwn = !id || (user && id === user.id)
   const stats = getUserStats(profileUser?.id)
@@ -77,6 +92,9 @@ export default function Profile() {
   const [sharePopup, setSharePopup] = useState(false)
   const [form, setForm] = useState({ name: profileUser?.name, bio: profileUser?.bio, location: profileUser?.location, category: profileUser?.category, phone: profileUser?.phone, avatar: profileUser?.avatar })
   const avatarRef = useRef(null)
+
+  // ✅ AJOUT 3 : Filtrage des posts de cet utilisateur précis
+  const userPosts = posts?.filter(p => p.authorId === profileUser?.id) || []
 
   const handleSave = () => { updateUser(form); setEditing(false) }
   const handleShare = () => setSharePopup(true)
@@ -93,6 +111,9 @@ export default function Profile() {
   if (!users || !profileUser) return <div className="p-4 text-center">Chargement...</div>
 
   const cat = getCategoryInfo(profileUser.category)
+  
+  // Petite variable pour les couleurs des types de posts (identique à Feed)
+  const typeColors = { OPPORTUNITY: 'bg-green-100 text-green-700', JOB: 'bg-blue-100 text-blue-700', SERVICE: 'bg-purple-100 text-purple-700', FORMATION: 'bg-pink-100 text-pink-700', PRODUCT: 'bg-orange-100 text-orange-700', NEWS: 'bg-cyan-100 text-cyan-700' }
 
   return (
     <div className="container-app px-4 py-6">
@@ -173,6 +194,46 @@ export default function Profile() {
             </Link>
           )}
         </div>
+      </div>
+
+      {/* ✅ AJOUT 4 : La section qui affiche les publications de l'utilisateur */}
+      <div className="mt-6">
+        <h2 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+           Publications ({userPosts.length})
+        </h2>
+        
+        {userPosts.length === 0 ? (
+          <div className="bg-white rounded-xl border border-gray-100 p-6 text-center text-gray-500 text-sm">
+            Aucune publication pour le moment.
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {userPosts.map(post => (
+              <div key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] ${typeColors[post.type] || 'bg-gray-100'}`}>
+                    {POST_TYPES.find(t => t.id === post.type)?.label}
+                  </span>
+                  <span className="text-[10px] text-gray-400">{getTimeAgo(post.createdAt)}</span>
+                </div>
+                
+                <p className="text-gray-800 whitespace-pre-wrap text-sm leading-relaxed">{post.content}</p>
+                
+                {post.media && (
+                  <div className="mt-3 rounded-xl overflow-hidden">
+                    {post.media.type === 'image' && <img src={post.media.url} alt="Media" className="w-full max-h-60 object-cover" />}
+                    {post.media.type === 'video' && <video src={post.media.url} controls className="w-full max-h-60" />}
+                  </div>
+                )}
+                
+                <div className="mt-3 pt-2 border-t border-gray-50 flex items-center gap-3 text-xs text-gray-500">
+                  <span className="flex items-center gap-1"><Heart className="w-3 h-3" /> {post.likes?.length || 0}</span>
+                  <span className="flex items-center gap-1"><MessageCircle className="w-3 h-3" /> {post.comments?.length || 0}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
